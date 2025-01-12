@@ -50,4 +50,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/links/{link}', [LinkController::class, 'destroy'])->name('links.destroy');
     Route::post('/links/reorder', [LinkController::class, 'reorder']);
 });
+
+Route::get('/{pageName}', [PublicPageController::class, 'show'])->name('publicview');
 require __DIR__.'/auth.php';
