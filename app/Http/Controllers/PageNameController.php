@@ -1,5 +1,4 @@
 <?php
-// app/Http/Controllers/PageNameController.php
 
 namespace App\Http\Controllers;
 

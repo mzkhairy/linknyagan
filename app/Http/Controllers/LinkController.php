@@ -22,11 +22,17 @@ class LinkController extends Controller
         ]);
     
         $validated['user_id'] = Auth::user()->id;
-        $validated['order'] = Auth::user()->links()->count();
     
         $link = Link::create($validated);
     
         return redirect()->route('dashboard')->with('success', 'Link added successfully!');
+    }
+
+    public function edit(Link $link)
+    {
+        $this->authorize('update', $link);
+
+        return view('links.edit', compact('link'));
     }
 
     public function update(Request $request, Link $link)

@@ -1,11 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Welcome') }} {{Auth::user()->name}} {{ __('to your linknya.gan/') }}{{Auth::user()->page_name}} {{ __('dashboard') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+
+    <div class="py-12" x-data="{ showEditModal: false, currentLink: {} }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if (session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
@@ -92,8 +96,14 @@
                                         </a>
                                     </div>
                                     <div class="flex flex-col items-center justify-center ml-4 space-y-2">
-                                        <button onclick="showEdit('{{ $link->id }}')" 
-                                            class="bg-indigo-600 text-white px-2 py-1 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        <button @click="showEditModal = true; currentLink = {
+                                            id: '{{ $link->id }}',
+                                            title: '{{ addslashes($link->title) }}',
+                                            url: '{{ $link->url }}',
+                                            description: '{{ addslashes($link->description) }}',
+                                            image: '{{ $link->image }}'
+                                        }"
+                                        class="bg-indigo-600 text-white px-2 py-1 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                                             Edit
                                         </button>
                                         <form action="{{ route('links.destroy', $link) }}" method="POST" class="inline" 
@@ -113,5 +123,62 @@
                 </div>
             </div>
         </div>
+
+        <!-- Edit Modal -->
+        <template x-teleport="body">
+            <div x-show="showEditModal"
+                x-cloak
+                class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0">
+                <div class="bg-white rounded-lg p-6 w-full max-w-md" @click.away="showEditModal = false">
+                    <h2 class="text-xl font-bold mb-4">Edit Link</h2>
+                    <form x-bind:action="'/links/' + currentLink.id" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <div class="mb-4">
+                            <label for="edit-title" class="block text-sm font-medium text-gray-700">Title</label>
+                            <input type="text" name="title" id="edit-title" 
+                                x-model="currentLink.title"
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500" 
+                                required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit-url" class="block text-sm font-medium text-gray-700">URL</label>
+                            <input type="url" name="url" id="edit-url" 
+                                x-model="currentLink.url"
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500" 
+                                required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit-description" class="block text-sm font-medium text-gray-700">Description</label>
+                            <input type="text" name="description" id="edit-description" 
+                                x-model="currentLink.description"
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        </div>
+                        <div class="mb-4">
+                            <label for="edit-image" class="block text-sm font-medium text-gray-700">Image URL</label>
+                            <input type="url" name="image" id="edit-image" 
+                                x-model="currentLink.image"
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="button" @click="showEditModal = false" 
+                                class="mr-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                                Cancel
+                            </button>
+                            <button type="submit" 
+                                class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+                                Update
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </template>
     </div>
 </x-app-layout>
