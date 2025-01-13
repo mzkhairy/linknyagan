@@ -13,21 +13,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/register', function () {
-    return view('welcome');
-})->middleware('guest')->name('register');
 
-Route::get('/login', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/forgot-password', function () {
-    return view('welcome');
-})->middleware('guest')->name('password.request');
-
-Route::get('/reset-password/{token}', function () {
-    return view('welcome');
-})->middleware('guest')->name('password.reset');    
+Route::middleware('guest')->group(function () {
+    Route::get('/login', function () {
+        return view('welcome');
+    })->name('login');
+    
+    Route::get('/register', function () {
+        return view('welcome');
+    })->name('register');
+    
+    Route::get('/forgot-password', function () {
+        return view('welcome');
+    })->name('password.request');
+    
+    Route::get('/reset-password/{token}', function () {
+        return view('welcome');
+    })->name('password.reset');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
