@@ -8,9 +8,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased">
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen" style="background-color: #FCF8F3  ;">
         <!-- Header -->
-        <header class="bg-white shadow">
+        <header class="shadow" style="background-color: #AEDADD;">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div class="flex justify-between items-center">
                     <!-- Logo -->
@@ -22,9 +22,17 @@
                     @if (Route::has('login'))
                         <div>
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
+                            <a href="{{ url('/dashboard') }}" class="text-sm text-white px-4 py-2 rounded-md shadow-md transition-all" style="background-color: #DB996C;">
+                                Dashboard
+                            </a>
                             @else
-                                <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Login</a>
+                                <a href="{{ route('login') }}" 
+                                style="background-color: #DB996C; color: #ffffff; border-radius: 0.375rem; padding: 0.5rem 1rem; text-decoration: none; display: inline-block; text-align: center; font-size: 0.875rem; font-weight: 500; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); transition: background-color 0.2s ease;" 
+                                onmouseover="this.style.backgroundColor='#2980b9';" 
+                                onmouseout="this.style.backgroundColor='#3498db';"
+                            >
+                                Login
+                                </a>
                             @endauth
                         </div>
                     @endif
@@ -36,22 +44,22 @@
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-                    Share All Your Links in One Place
+                    Bagikan Semua Tautan Anda di Satu Tempat
                 </h2>
-                <p class="mt-4 text-lg text-gray-500">
-                    Create your personalized page to showcase all your important links in one convenient location. 
-                    Perfect for social media profiles, portfolios, or business connections. 
-                    Join us and make sharing your online presence easier than ever.
+                <p class="mt-4 text-lg text-black-500">
+                    Ciptakan halaman unik untuk menampilkan semua tautan penting Anda di satu tempat yang mudah diakses. 
+                    Ideal untuk profil media sosial, portofolio, atau arsip tautan Anda. 
+                    Bergabunglah sekarang dan permudah cara Anda berbagi kehadiran dirimu secara online!
                 </p>
             </div>
 
             <!-- Page Name Checker Form -->
             <div class="max-w-2xl mx-auto" x-data="pageNameChecker()">
-                <div class="bg-white shadow-sm rounded-lg p-6">
-                    <div class="mb-4">
+                <div class="shadow-sm rounded-lg p-6" style="background-color: #AEDADD;">
+                    <div class="mb-4" style="background: #  ">
                         <label for="page_name" class="block text-sm font-medium text-gray-700 mb-2">Choose your unique link</label>
                         <div class="flex items-center">
-                            <span class="text-gray-500 bg-gray-100 px-3 py-2 rounded-l-md border border-r-0 border-gray-300">
+                            <span style="color: #000000; background-color: #FBFBFB;" class="px-3 py-2 rounded-l-md border border-r-0 border-gray-300">
                                 linknya.gan/
                             </span>
                             <input 
@@ -72,10 +80,11 @@
                         <a 
                             :href="isAvailable ? registerUrl : '#'"
                             @click="handleRegisterClick"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-opacity"
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition-opacity"
                             :class="{ 'opacity-50 cursor-not-allowed': !isAvailable }"
                             x-bind:disabled="!isAvailable"
-                        >
+                            :style="{ backgroundColor: isAvailable ? '#DB996C' : '#DB996C', borderColor: isAvailable ? '#DB996C' : '#DB996C' }"
+                            >
                             Register with this name
                         </a>
                     </div>

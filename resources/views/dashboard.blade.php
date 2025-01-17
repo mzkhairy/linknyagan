@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Welcome') }} {{Auth::user()->name}} {{ __('to your linknya.gan/') }}{{Auth::user()->page_name}} {{ __('dashboard') }}
+            {{ __('Selamat datang') }} {{Auth::user()->name}} {{ __('di linknya.gan/') }}{{Auth::user()->page_name}} {{ __('dashboard') }}
         </h2>
     </x-slot>
 
@@ -9,7 +9,7 @@
         [x-cloak] { display: none !important; }
     </style>
 
-    <div class="py-12" x-data="{ showEditModal: false, currentLink: {} }">
+    <div class="py-12" style="background-color: #FCF8F3" x-data="{ showEditModal: false, currentLink: {} }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if (session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
@@ -18,7 +18,7 @@
             @endif
 
             <!-- Add Link Form -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6" style="background-color: #AEDADD">
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-medium mb-4">Add New Link</h3>
                     <form action="{{ route('links.store') }}" method="POST">
@@ -61,7 +61,7 @@
 
                         <div class="mt-4">
                             <button type="submit" 
-                                class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" style="background-color: #DB996C">
                                 Save Link
                             </button>
                         </div>
@@ -71,11 +71,11 @@
 
             <!-- Links List -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+                <div class="p-6 text-gray-900" style="background-color: #AEDADD">
                     <h3 class="text-lg font-medium mb-4">Your Links</h3>
                     <div class="space-y-6">
                         @foreach(Auth::user()->links as $link)
-                            <div class="border rounded-lg p-4 bg-gray-50">
+                            <div class="border rounded-lg p-4 bg-gray-50" style="background-color: #FCF8F3">
                                 <div class="flex items-center">
                                     <div class="flex-grow">
                                         <a href="{{ $link->url }}" target="_blank" class="block">
@@ -89,7 +89,7 @@
                                                     <h4 class="font-medium text-lg">{{ $link->title }}</h4>
                                                     <p class="text-sm text-blue-600 hover:underline break-words">{{ $link->url }}</p>
                                                     @if($link->description)
-                                                        <p class="text-sm text-gray-500 mt-1">{{ $link->description }}</p>
+                                                        <p class="text-sm text-white-500 mt-1">{{ $link->description }}</p>
                                                     @endif
                                                 </div>
                                             </div>
@@ -135,7 +135,7 @@
                 x-transition:leave="transition ease-in duration-200"
                 x-transition:leave-start="opacity-100"
                 x-transition:leave-end="opacity-0">
-                <div class="bg-white rounded-lg p-6 w-full max-w-md" @click.away="showEditModal = false">
+                <div class="bg-white rounded-lg p-6 w-full max-w-md" @click.away="showEditModal = false" style="background-color: #AEDADD">
                     <h2 class="text-xl font-bold mb-4">Edit Link</h2>
                     <form x-bind:action="'/links/' + currentLink.id" method="POST">
                         @csrf
