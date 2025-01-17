@@ -10,9 +10,9 @@
     <div class="max-w-3xl mx-auto px-4 py-8">
         <div class="text-center mb-8">
             <h1 class="text-2xl font-bold text-gray-900">{{ $user->name }}'s Links</h1>
-            @if($user->pageSettings->first()?->page_description)
+            @if($user->pageSettings->page_description)
             <p class="text-gray-600 text-sm mt-2">
-                {{ $user->pageSettings->first()->page_description }}
+                {{ $user->pageSettings->page_description }}
             </p>
             @endif
         </div>

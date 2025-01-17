@@ -30,14 +30,16 @@ class User extends Authenticatable
 
     protected static function boot()
     {
-    parent::boot();
-
-    static::created(function ($user) {
-        $user->pageSettings()->create([
-            'page_description' => null,
-        ]);
-    });
+        parent::boot();
+    
+        static::created(function ($user) {
+            $user->pageSettings()->create([
+                'page_description' => null, // Initialize with null or default value
+            ]);
+        });
     }
+    
+    
 
 
     public function links()
@@ -46,6 +48,6 @@ class User extends Authenticatable
     }
     public function pageSettings()
     {
-        return $this->hasMany(pageSettings::class);
+        return $this->hasOne(PageSettings::class);
     }
 }

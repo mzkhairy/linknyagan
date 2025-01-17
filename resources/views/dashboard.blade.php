@@ -27,7 +27,7 @@
                             <div class="mb-4">
                                 <textarea name="page_description" rows="3" 
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                                    >{{ Auth::user()->pageSettings->first()?->page_description }}</textarea>
+                                    >{{ Auth::user()->pageSettings->page_description }}</textarea>
                             </div>
                             <button type="submit" 
                                 class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" style="background-color: #DB996C">
