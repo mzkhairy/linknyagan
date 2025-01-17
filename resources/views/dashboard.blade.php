@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Selamat datang') }} {{Auth::user()->name}} {{ __('di linknya.gan/') }}{{Auth::user()->page_name}} {{ __('dashboard') }}
+            {{ __('Selamat datang') }} {{Auth::user()->name}}{{ __(', di dashboard pengaturan linknya.gan/') }}{{Auth::user()->page_name}}
         </h2>
     </x-slot>
 
@@ -17,15 +17,36 @@
                 </div>
             @endif
 
+            <div>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6" style="background-color: #AEDADD">
+                    <div class="p-6 text-gray-900">
+                        <h3 class="text-lg font-medium mb-4">Deskripsi Halaman</h3>
+                        <form action="{{ route('page.update.description') }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <div class="mb-4">
+                                <textarea name="page_description" rows="3" 
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    >{{ Auth::user()->pageSettings->first()?->page_description }}</textarea>
+                            </div>
+                            <button type="submit" 
+                                class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" style="background-color: #DB996C">
+                                Update Deskripsi
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <!-- Add Link Form -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6" style="background-color: #AEDADD">
                 <div class="p-6 text-gray-900">
-                    <h3 class="text-lg font-medium mb-4">Add New Link</h3>
+                    <h3 class="text-lg font-medium mb-4">Tambah link</h3>
                     <form action="{{ route('links.store') }}" method="POST">
                         @csrf
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                             <div>
-                                <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+                                <label for="title" class="block text-sm font-medium text-gray-700">Judul</label>
                                 <input type="text" name="title" id="title" required 
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 @error('title') border-red-500 @enderror"
                                     value="{{ old('title') }}">
@@ -45,14 +66,14 @@
                             </div>
 
                             <div>
-                                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                                <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                                 <input type="text" name="description" id="description" 
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                     value="{{ old('description') }}">
                             </div>
 
                             <div>
-                                <label for="image" class="block text-sm font-medium text-gray-700">Image URL</label>
+                                <label for="image" class="block text-sm font-medium text-gray-700">URL Gambar</label>
                                 <input type="url" name="image" id="image" 
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                     value="{{ old('image') }}">
@@ -62,7 +83,7 @@
                         <div class="mt-4">
                             <button type="submit" 
                                 class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" style="background-color: #DB996C">
-                                Save Link
+                                Simpan Link
                             </button>
                         </div>
                     </form>
@@ -72,7 +93,7 @@
             <!-- Links List -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900" style="background-color: #AEDADD">
-                    <h3 class="text-lg font-medium mb-4">Your Links</h3>
+                    <h3 class="text-lg font-medium mb-4">linkmu</h3>
                     <div class="space-y-6">
                         @foreach(Auth::user()->links as $link)
                             <div class="border rounded-lg p-4 bg-gray-50" style="background-color: #FCF8F3">

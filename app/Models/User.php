@@ -28,8 +28,24 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected static function boot()
+    {
+    parent::boot();
+
+    static::created(function ($user) {
+        $user->pageSettings()->create([
+            'page_description' => null,
+        ]);
+    });
+    }
+
+
     public function links()
     {
-        return $this->hasMany(Link::class)->orderBy('order');
+        return $this->hasMany(Link::class);
+    }
+    public function pageSettings()
+    {
+        return $this->hasMany(pageSettings::class);
     }
 }

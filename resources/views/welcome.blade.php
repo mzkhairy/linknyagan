@@ -31,7 +31,7 @@
                                 onmouseover="this.style.backgroundColor='#2980b9';" 
                                 onmouseout="this.style.backgroundColor='#3498db';"
                             >
-                                Login
+                                Masuk
                                 </a>
                             @endauth
                         </div>
@@ -57,7 +57,7 @@
             <div class="max-w-2xl mx-auto" x-data="pageNameChecker()">
                 <div class="shadow-sm rounded-lg p-6" style="background-color: #AEDADD;">
                     <div class="mb-4" style="background: #  ">
-                        <label for="page_name" class="block text-sm font-medium text-gray-700 mb-2">Choose your unique link</label>
+                        <label for="page_name" class="block text-sm font-medium text-gray-700 mb-2">Daftarkan page unikmu</label>
                         <div class="flex items-center">
                             <span style="color: #000000; background-color: #FBFBFB;" class="px-3 py-2 rounded-l-md border border-r-0 border-gray-300">
                                 linknya.gan/
@@ -85,7 +85,7 @@
                             x-bind:disabled="!isAvailable"
                             :style="{ backgroundColor: isAvailable ? '#DB996C' : '#DB996C', borderColor: isAvailable ? '#DB996C' : '#DB996C' }"
                             >
-                            Register with this name
+                            Daftar
                         </a>
                     </div>
                 </div>

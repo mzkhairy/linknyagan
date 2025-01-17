@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Link;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -28,12 +27,6 @@ class LinkController extends Controller
         return redirect()->route('dashboard')->with('success', 'Link added successfully!');
     }
 
-    public function edit(Link $link)
-    {
-        $this->authorize('update', $link);
-
-        return view('links.edit', compact('link'));
-    }
 
     public function update(Request $request, Link $link)
     {
@@ -58,21 +51,5 @@ class LinkController extends Controller
         $link->delete();
         
         return redirect()->route('dashboard')->with('success', 'Link deleted successfully!');
-    }
-
-    public function reorder(Request $request)
-    {
-        $validated = $request->validate([
-            'links' => 'required|array',
-            'links.*' => 'exists:links,id'
-        ]);
-
-        foreach ($validated['links'] as $index => $id) {
-            Link::where('id', $id)
-                ->where('user_id', Auth::id())
-                ->update(['order' => $index]);
-        }
-
-        return redirect()->route('dashboard')->with('success', 'Link reordered successfully!');
     }
 }
