@@ -20,10 +20,6 @@ Route::middleware('guest')->group(function () {
         return view('welcome');
     })->name('login');
     
-    Route::get('/register', function () {
-        return view('welcome');
-    })->name('register');
-    
     Route::get('/forgot-password', function () {
         return view('welcome');
     })->name('password.request');
@@ -49,6 +45,10 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/register', function () {
+    return view('welcome');
+})->name('register');
 
 Route::get('/{pageName}', [PublicPageController::class, 'show'])->name('publicview');
 require __DIR__.'/auth.php';

@@ -55,6 +55,17 @@
 
             <!-- Page Name Checker Form -->
             <div class="max-w-2xl mx-auto" x-data="pageNameChecker()">
+                @if (session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                        <strong class="font-bold">Success!</strong>
+                        <span class="block sm:inline">{{ session('success') }}</span>
+                        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                            <button onclick="this.parentElement.parentElement.style.display='none'" class="text-green-700">
+                                <span class="text-2xl">&times;</span>
+                            </button>
+                        </span>
+                    </div>
+                @endif
                 <div class="shadow-sm rounded-lg p-6" style="background-color: #AEDADD;">
                     <div class="mb-4" style="background: #  ">
                         <label for="page_name" class="block text-sm font-medium text-gray-700 mb-2">Daftarkan page unikmu</label>
