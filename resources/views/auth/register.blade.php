@@ -29,7 +29,7 @@
                     class="block mt-0 w-full rounded-l-none" 
                     type="text" 
                     name="page_name" 
-                    :value="old('page_name', request('page_name'))" 
+                    :value="old('page_name', $page_name ?? request('page_name'))" 
                     required 
                     readonly 
                     style="background-color: #f3f4f6;"

@@ -15,11 +15,32 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
-    public function create(Request $request): View
+    public function createFromEncoded($encoded)
     {
-        return view('auth.register', [
-            'page_name' => $request->query('page_name')
-        ]);
+        try {
+            // Decode the URL
+            $decodedUrl = base64_decode($encoded);
+            
+            if ($decodedUrl === false) {
+                throw new \Exception('Invalid URL encoding');
+            }
+    
+            // Parse the decoded URL to get the page_name parameter
+            $parsedUrl = parse_url($decodedUrl);
+            parse_str($parsedUrl['query'] ?? '', $queryParams);
+            
+            $pageName = $queryParams['page_name'] ?? null;
+    
+            if (!$pageName) {
+                throw new \Exception('Missing page name parameter');
+            }
+    
+            // Pass the page_name to the view with flash data
+            return view('auth.register')->with('page_name', $pageName);
+    
+        } catch (\Exception $e) {
+            return redirect()->route('register');
+        }
     }
 
     public function store(Request $request): RedirectResponse

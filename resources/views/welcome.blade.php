@@ -114,8 +114,13 @@
                 timeout: null,
 
                 get registerUrl() {
-                    return `/register?page_name=${this.pageName}`;
-                },
+    // Create the original URL
+    const originalUrl = `/register?page_name=${this.pageName}`;
+    // Encode the entire URL
+    const encodedUrl = btoa(unescape(encodeURIComponent(originalUrl)));
+    // Return the encoded URL path
+    return `/r/${encodedUrl}`;  // We'll use /r/ as a prefix for encoded register URLs
+},
 
                 handleRegisterClick(event) {
                     if (!this.isAvailable) {
